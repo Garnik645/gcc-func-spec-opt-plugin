@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #define N 1024
 #define M 512
@@ -19,11 +18,14 @@ void HEAVY_ATTR heavy_compute(float threshold) {
     for (int i = 0; i < N; i++) {
         a[i] = i * 0.5f;
         b[i] = N - i;
-        c[i] = sinf(i * 0.01f);
+
+        // Replace sinf(i * 0.01f) with a simple pseudo-sine wave pattern
+        // to avoid using math.h
+        c[i] = (i % 100) * 0.01f - 0.5f;
+
         d[i] = 0.0f;
     }
 
-    // Loop nest with condition and multiple patterns
     for (int i = 0; i < N; i++) {
         if (threshold > 100.0f) {
             for (int j = 0; j < M; j++) {
@@ -36,17 +38,14 @@ void HEAVY_ATTR heavy_compute(float threshold) {
         }
     }
 
-    // Vectorization target
     for (int i = 0; i < N; i++) {
         d[i] = a[i] * b[i] + c[i] * 2.0f;
     }
 
-    // Reduction with dependency — partial vectorization
     for (int i = 0; i < N; i++) {
         sum += d[i];
     }
 
-    // Peel/unroll candidate
     for (int i = 0; i < N - 3; i += 4) {
         d[i] += a[i+1] - c[i+2];
         d[i+1] += b[i+2];
@@ -67,3 +66,4 @@ int main() {
     heavy_compute(150.0f);  // Also try with 50.0f to trigger branch paths
     return 0;
 }
+
