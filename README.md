@@ -9,14 +9,14 @@ Compatibility with other versions is not guaranteed and may require adjustments 
 
 ## Requirements
 
-```bash
+```shell
 sudo apt install gcc-13 g++-13 gcc-13-plugin-dev cmake build-essential
 ```
 
 ## Usage
 
 Use the plugin by passing it to gcc with `-fplugin` flag:
-```bash
+```shell
 gcc -fplugin=./func-spec-opt.so your_source_file.c
 ```
 
