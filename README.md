@@ -7,6 +7,12 @@ This GCC plugin allows developers to **interactively inspect and modify function
 This plugin was implemented and tested with **GCC 13**.  
 Compatibility with other versions is not guaranteed and may require adjustments to internal APIs or plugin hooks.
 
+## Requirements
+
+```bash
+sudo apt install gcc-13 g++-13 gcc-13-plugin-dev cmake build-essential
+```
+
 ## Usage
 
 Use the plugin by passing it to gcc with `-fplugin` flag:
